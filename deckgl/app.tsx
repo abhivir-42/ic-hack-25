@@ -661,12 +661,10 @@ export default function App({
                 }),
 
               // Show roads in the modal
-              roadsGeoJSON &&
-                roadsGeoJSON.features &&
-                roadsGeoJSON.features.length > 0 &&
+            
                 new ScatterplotLayer({
                   id: "roads-modal",
-                  data: roadsGeoJSON.features,
+                  data: roadsGeoJSON,
                   getPosition: (d) => d.geometry.coordinates,
                   getFillColor: [255, 204, 0], // Yellow roads
                   getRadius: 3,
