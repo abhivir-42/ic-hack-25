@@ -12,8 +12,8 @@ import type { Color, PickingInfo, MapViewState } from "@deck.gl/core";
 
 // Source data CSV
 const DATA_URL =
-//   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv"; // eslint-disable-line
- "./synthetic_crime_data.csv"
+  //   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv"; // eslint-disable-line
+  "./modified_metropolitan_street.csv";
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
   intensity: 1.0,
@@ -345,7 +345,13 @@ export default function App({
   };
 
   return (
-    <div style={{ position: "relative", height: "100vh", backgroundColor: "#1e1e1e" }}>
+    <div
+      style={{
+        position: "relative",
+        height: "100vh",
+        backgroundColor: "#1e1e1e",
+      }}
+    >
       <DeckGL
         layers={layers}
         effects={[lightingEffect]}
@@ -385,7 +391,13 @@ export default function App({
             name="longitude"
             value={viewState.longitude}
             onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              padding: "5px",
+              borderRadius: "4px",
+              border: "none",
+            }}
           />
         </label>
         <label style={{ display: "block", marginBottom: "10px" }}>
@@ -395,7 +407,13 @@ export default function App({
             name="latitude"
             value={viewState.latitude}
             onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              padding: "5px",
+              borderRadius: "4px",
+              border: "none",
+            }}
           />
         </label>
         <label style={{ display: "block", marginBottom: "10px" }}>
@@ -405,7 +423,13 @@ export default function App({
             name="zoom"
             value={viewState.zoom}
             onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              padding: "5px",
+              borderRadius: "4px",
+              border: "none",
+            }}
           />
         </label>
         <label style={{ display: "block", marginBottom: "10px" }}>
@@ -415,22 +439,40 @@ export default function App({
             name="pitch"
             value={viewState.pitch}
             onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              padding: "5px",
+              borderRadius: "4px",
+              border: "none",
+            }}
           />
         </label>
         <label style={{ display: "block", marginBottom: "10px" }}>
           Bearing:
           <input
-            type="number"
+            type="range"
             name="bearing"
+            min="-180"
+            max="180"
             value={viewState.bearing}
             onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}
+            style={{ marginLeft: "10px", width: "100%" }}
           />
         </label>
+
         <label style={{ display: "block", marginBottom: "10px" }}>
           Borough:
-          <select onChange={handleBoroughChange} style={{ marginLeft: "10px", width: "100%", padding: "5px", borderRadius: "4px", border: "none" }}>
+          <select
+            onChange={handleBoroughChange}
+            style={{
+              marginLeft: "10px",
+              width: "100%",
+              padding: "5px",
+              borderRadius: "4px",
+              border: "none",
+            }}
+          >
             <option value="">All</option>
             {Object.keys(boroughs).map((borough) => (
               <option key={borough} value={borough}>
@@ -481,7 +523,17 @@ export default function App({
           <h4>Clicked Location</h4>
           <p>Latitude: {clickedLocation.lat}</p>
           <p>Longitude: {clickedLocation.lng}</p>
-          <button onClick={closeModal} style={{ marginBottom: "10px", padding: "10px", borderRadius: "4px", border: "none", background: "#007bff", color: "#fff" }}>
+          <button
+            onClick={closeModal}
+            style={{
+              marginBottom: "10px",
+              padding: "10px",
+              borderRadius: "4px",
+              border: "none",
+              background: "#007bff",
+              color: "#fff",
+            }}
+          >
             Close
           </button>
           <div style={{ height: "400px", width: "400px" }}>
@@ -510,7 +562,6 @@ export async function renderToDOM(container: HTMLDivElement) {
 
   console.log(data);
 
-
   const londonBounds = {
     north: 51.686,
     south: 51.286,
@@ -519,8 +570,10 @@ export async function renderToDOM(container: HTMLDivElement) {
   };
   const points: DataPoint[] = data
     .map((d: any) =>
-        Number.isFinite(d["Crime Longitude"]) && Number.isFinite(d["Crime Latitude"]) ? [d["Crime Longitude"], d["Crime Latitude"]] : null
-)
+      Number.isFinite(d["Longitude"]) && Number.isFinite(d["Latitude"])
+        ? [d["Longitude"], d["Latitude"]]
+        : null
+    )
     .filter(
       (d: DataPoint | null): d is DataPoint =>
         d !== null &&
