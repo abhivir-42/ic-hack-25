@@ -2,16 +2,19 @@
   "version": "4",
   "specifiers": {
     "npm:@eslint/eslintrc@3": "3.2.0",
+    "npm:@loaders.gl/csv@^4.2.0": "4.3.3_@loaders.gl+core@4.3.3",
     "npm:@types/node@20": "20.17.16",
-    "npm:@types/react-dom@19": "19.0.3_@types+react@19.0.8",
+    "npm:@types/react-dom@18": "18.3.5_@types+react@18.3.18",
+    "npm:@types/react@18": "18.3.18",
     "npm:@types/react@19": "19.0.8",
-    "npm:deck.gl@^9.1.0": "9.1.0_react@19.0.0_react-dom@19.0.0__react@19.0.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0_@luma.gl+core@9.1.0_@luma.gl+engine@9.1.0__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+aggregation-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+extensions@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+geo-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+extensions@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@deck.gl+mesh-layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@loaders.gl+core@4.3.3_@deck.gl+mesh-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+widgets@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0",
+    "npm:deck.gl@^9.1.0": "9.1.0_react@19.0.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0_@luma.gl+core@9.1.0_@luma.gl+engine@9.1.0__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+aggregation-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+extensions@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+geo-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+extensions@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@deck.gl+mesh-layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@loaders.gl+core@4.3.3_@deck.gl+mesh-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+widgets@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0",
     "npm:eslint-config-next@15.1.6": "15.1.6_eslint@9.19.0_typescript@5.7.3_@typescript-eslint+parser@8.22.0__eslint@9.19.0__typescript@5.7.3_eslint-plugin-import@2.31.0__eslint@9.19.0",
     "npm:eslint@9": "9.19.0",
+    "npm:maplibre-gl@3": "3.6.2",
     "npm:next@15.1.6": "15.1.6_react@19.0.0_react-dom@19.0.0__react@19.0.0",
     "npm:postcss@8": "8.5.1",
-    "npm:react-dom@19": "19.0.0_react@19.0.0",
-    "npm:react-map-gl@^7.1.9": "7.1.9_react@19.0.0_react-dom@19.0.0__react@19.0.0",
+    "npm:react-dom@18": "18.3.1_react@18.3.1",
+    "npm:react-map-gl@^7.1.0": "7.1.9_maplibre-gl@3.6.2_react@19.0.0_react-dom@18.3.1__react@18.3.1",
     "npm:react@19": "19.0.0",
     "npm:tailwindcss@^3.4.1": "3.4.17_postcss@8.5.1",
     "npm:typescript@5": "5.7.3"
@@ -279,8 +282,8 @@
       "dependencies": [
         "@deck.gl/core",
         "@deck.gl/widgets",
-        "react",
-        "react-dom"
+        "react@19.0.0",
+        "react-dom@19.0.0_react@19.0.0"
       ]
     },
     "@deck.gl/widgets@9.1.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0": {
@@ -599,6 +602,15 @@
         "@types/crypto-js"
       ]
     },
+    "@loaders.gl/csv@4.3.3_@loaders.gl+core@4.3.3": {
+      "integrity": "sha512-ziDj5UE31/zoToW4OvjjYh4ueApauaSZmT0/4XNa/ixCkVWA3AQeuhiViWNW5u+pG6Bn92UTa08riJG591vOpA==",
+      "dependencies": [
+        "@loaders.gl/core",
+        "@loaders.gl/loader-utils",
+        "@loaders.gl/schema",
+        "d3-dsv"
+      ]
+    },
     "@loaders.gl/draco@4.3.3_@loaders.gl+core@4.3.3": {
       "integrity": "sha512-f2isxvOoH4Pm5p4mGvNN9gVigUwX84j9gdKNMV1aSo56GS1KE3GS2rXaIoy1qaIHMzkPySUTEcOTwayf0hWU7A==",
       "dependencies": [
@@ -805,6 +817,13 @@
         "@probe.gl/env"
       ]
     },
+    "@mapbox/geojson-rewind@0.5.2": {
+      "integrity": "sha512-tJaT+RbYGJYStt7wI3cq4Nl4SXxG8W7JDG5DMJu97V25RnbNg3QtQtf+KD+VLjNpWKYsRvXDNmNrBgEETr1ifA==",
+      "dependencies": [
+        "get-stream",
+        "minimist"
+      ]
+    },
     "@mapbox/jsonlint-lines-primitives@2.0.2": {
       "integrity": "sha512-rY0o9A5ECsTQRVhv7tL/OyDpGAoUB4tTvLiW1DSzQGq4bvTPhNw1VpSNjDJc5GFZ2XuyOtSWSVN05qOtcD71qQ=="
     },
@@ -831,6 +850,9 @@
       "dependencies": [
         "@mapbox/point-geometry"
       ]
+    },
+    "@mapbox/whoots-js@3.1.0": {
+      "integrity": "sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q=="
     },
     "@maplibre/maplibre-gl-style-spec@19.3.3": {
       "integrity": "sha512-cOZZOVhDSulgK0meTsTkmNXb1ahVvmTmWmfx9gRBwc6hq98wS9JP35ESIoNq3xqEan+UN+gn8187Z6E4NKhLsw==",
@@ -1123,6 +1145,17 @@
         "@types/geojson"
       ]
     },
+    "@types/mapbox__point-geometry@0.1.4": {
+      "integrity": "sha512-mUWlSxAmYLfwnRBmgYV86tgYmMIICX4kza8YnE/eIlywGe2XoOxlpVnXWwir92xRLjwyarqwpu2EJKD2pk0IUA=="
+    },
+    "@types/mapbox__vector-tile@1.3.4": {
+      "integrity": "sha512-bpd8dRn9pr6xKvuEBQup8pwQfD4VUyqO/2deGjfpe6AwC8YRlyEipvefyRJUSiCJTZuCb8Pl1ciVV5ekqJ96Bg==",
+      "dependencies": [
+        "@types/geojson",
+        "@types/mapbox__point-geometry",
+        "@types/pbf"
+      ]
+    },
     "@types/node@20.17.16": {
       "integrity": "sha512-vOTpLduLkZXePLxHiHsBLp98mHGnl8RptV4YAO3HfKO5UHjDvySGbxKtpYfy8Sx5+WKcgc45qNreJJRVM3L6mw==",
       "dependencies": [
@@ -1141,10 +1174,23 @@
     "@types/pako@1.0.7": {
       "integrity": "sha512-YBtzT2ztNF6R/9+UXj2wTGFnC9NklAnASt3sC0h2m1bbH7G6FyBIkt4AN8ThZpNfxUo1b2iMVO0UawiJymEt8A=="
     },
-    "@types/react-dom@19.0.3_@types+react@19.0.8": {
-      "integrity": "sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==",
+    "@types/pbf@3.0.5": {
+      "integrity": "sha512-j3pOPiEcWZ34R6a6mN07mUkM4o4Lwf6hPNt8eilOeZhTFbxFXmKhvXl9Y28jotFPaI1bpPDJsbCprUoNke6OrA=="
+    },
+    "@types/prop-types@15.7.14": {
+      "integrity": "sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ=="
+    },
+    "@types/react-dom@18.3.5_@types+react@18.3.18": {
+      "integrity": "sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==",
       "dependencies": [
-        "@types/react"
+        "@types/react@18.3.18"
+      ]
+    },
+    "@types/react@18.3.18": {
+      "integrity": "sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==",
+      "dependencies": [
+        "@types/prop-types",
+        "csstype"
       ]
     },
     "@types/react@19.0.8": {
@@ -1155,6 +1201,12 @@
     },
     "@types/sortablejs@1.15.8": {
       "integrity": "sha512-b79830lW+RZfwaztgs1aVPgbasJ8e7AXtZYHTELNXZPsERt4ymJdjV4OccDbHQAvHrCcFpbF78jkm0R6h/pZVg=="
+    },
+    "@types/supercluster@7.1.3": {
+      "integrity": "sha512-Z0pOY34GDFl3Q6hUFYf3HkTwKEE02e7QgtJppBt+beEAxnyOpJua+voGFvxINBHa06GwLFFym7gRPY2SiKIfIA==",
+      "dependencies": [
+        "@types/geojson"
+      ]
     },
     "@types/trusted-types@2.0.7": {
       "integrity": "sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw=="
@@ -1723,7 +1775,7 @@
       "dependencies": [
         "path-key",
         "shebang-command",
-        "which"
+        "which@2.0.2"
       ]
     },
     "crypt@0.0.2": {
@@ -1746,6 +1798,14 @@
     },
     "d3-color@3.1.0": {
       "integrity": "sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA=="
+    },
+    "d3-dsv@1.2.0": {
+      "integrity": "sha512-9yVlqvZcSOMhCYzniHE7EVUws7Fa1zgw+/EAV2BxJoG3ME19V6BQFBwI855XQDsxyOuG7NibqRMTtiF/Qup46g==",
+      "dependencies": [
+        "commander@2.20.3",
+        "iconv-lite",
+        "rw"
+      ]
     },
     "d3-format@3.1.0": {
       "integrity": "sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA=="
@@ -1823,7 +1883,7 @@
         "ms"
       ]
     },
-    "deck.gl@9.1.0_react@19.0.0_react-dom@19.0.0__react@19.0.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0_@luma.gl+core@9.1.0_@luma.gl+engine@9.1.0__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+aggregation-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+extensions@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+geo-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+extensions@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@deck.gl+mesh-layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@loaders.gl+core@4.3.3_@deck.gl+mesh-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+widgets@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0": {
+    "deck.gl@9.1.0_react@19.0.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0_@luma.gl+core@9.1.0_@luma.gl+engine@9.1.0__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+aggregation-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+extensions@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+geo-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+extensions@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@deck.gl+layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0__@deck.gl+mesh-layers@9.1.0___@deck.gl+core@9.1.0____@loaders.gl+core@4.3.3____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@luma.gl+core@9.1.0___@luma.gl+engine@9.1.0____@luma.gl+core@9.1.0____@luma.gl+shadertools@9.1.0_____@luma.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@loaders.gl+core@4.3.3_@deck.gl+mesh-layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+widgets@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0": {
       "integrity": "sha512-k142+N1+ZhqbAkQ0OT0TM+T6RwWTBmpFu/ei15UpuPuXaY64fE62Z3vByw0wIA4jsIF5M0XpLnoEfigSBO8GyQ==",
       "dependencies": [
         "@deck.gl/aggregation-layers@9.1.0_@deck.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@deck.gl+layers@9.1.0__@deck.gl+core@9.1.0___@loaders.gl+core@4.3.3___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0__@loaders.gl+core@4.3.3__@luma.gl+core@9.1.0__@luma.gl+engine@9.1.0___@luma.gl+core@9.1.0___@luma.gl+shadertools@9.1.0____@luma.gl+core@9.1.0_@luma.gl+core@9.1.0_@luma.gl+engine@9.1.0__@luma.gl+core@9.1.0__@luma.gl+shadertools@9.1.0___@luma.gl+core@9.1.0_@loaders.gl+core@4.3.3_@luma.gl+shadertools@9.1.0__@luma.gl+core@9.1.0",
@@ -1842,8 +1902,7 @@
         "@loaders.gl/core",
         "@luma.gl/core",
         "@luma.gl/engine",
-        "react",
-        "react-dom"
+        "react@19.0.0"
       ]
     },
     "deep-is@0.1.4": {
@@ -2359,6 +2418,9 @@
     "functions-have-names@1.2.3": {
       "integrity": "sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ=="
     },
+    "geojson-vt@3.2.1": {
+      "integrity": "sha512-EvGQQi/zPrDA6zr6BnJD/YhwAkBP8nnJ9emh3EnHQKVMfg/MRVtPbMYdgVy/IaEmn4UfagD2a6fafPDL5hbtwg=="
+    },
     "get-intrinsic@1.2.7": {
       "integrity": "sha512-VW6Pxhsrk0KAOqs3WEd0klDiF/+V7gQOpAvY1jVU/LHmaD/kQO4523aiJuikX/QAKYiW6x8Jh+RJej1almdtCA==",
       "dependencies": [
@@ -2380,6 +2442,9 @@
         "dunder-proto",
         "es-object-atoms"
       ]
+    },
+    "get-stream@6.0.1": {
+      "integrity": "sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg=="
     },
     "get-symbol-description@1.1.0": {
       "integrity": "sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==",
@@ -2422,6 +2487,14 @@
         "minipass",
         "package-json-from-dist",
         "path-scurry"
+      ]
+    },
+    "global-prefix@3.0.0": {
+      "integrity": "sha512-awConJSVCHVGND6x3tmMaKcQvwXLhjdkmomy2W+Goaui8YPgYgXJZewhg3fWC+DlfqqQuWg8AwqjGTD2nAPVWg==",
+      "dependencies": [
+        "ini",
+        "kind-of",
+        "which@1.3.1"
       ]
     },
     "globals@14.0.0": {
@@ -2479,6 +2552,12 @@
         "function-bind"
       ]
     },
+    "iconv-lite@0.4.24": {
+      "integrity": "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==",
+      "dependencies": [
+        "safer-buffer"
+      ]
+    },
     "ieee754@1.2.1": {
       "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA=="
     },
@@ -2503,6 +2582,9 @@
     },
     "inherits@2.0.4": {
       "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
+    },
+    "ini@1.3.8": {
+      "integrity": "sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew=="
     },
     "interactjs@1.10.27": {
       "integrity": "sha512-y/8RcCftGAF24gSp76X2JS3XpHiUvDQyhF8i7ujemBz77hwiHDuJzftHx7thY8cxGogwGiPJ+o97kWB6eAXnsA==",
@@ -2788,11 +2870,17 @@
         "setimmediate"
       ]
     },
+    "kdbush@4.0.2": {
+      "integrity": "sha512-WbCVYJ27Sz8zi9Q7Q0xHC+05iwkm3Znipc2XTlrnJbsHMYktW4hPhXUE8Ys1engBrvffoSCqbil1JQAa7clRpA=="
+    },
     "keyv@4.5.4": {
       "integrity": "sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==",
       "dependencies": [
         "json-buffer"
       ]
+    },
+    "kind-of@6.0.3": {
+      "integrity": "sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw=="
     },
     "ktx-parse@0.7.1": {
       "integrity": "sha512-FeA3g56ksdFNwjXJJsc1CCc7co+AJYDp6ipIp878zZ2bU8kWROatLYf39TQEd4/XRSUvBXovQ8gaVKWPXsCLEQ=="
@@ -2883,6 +2971,36 @@
     "lzo-wasm@0.0.4": {
       "integrity": "sha512-VKlnoJRFrB8SdJhlVKvW5vI1gGwcZ+mvChEXcSX6r2xDNc/Q2FD9esfBmGCuPZdrJ1feO+YcVFd2PTk0c137Gw=="
     },
+    "maplibre-gl@3.6.2": {
+      "integrity": "sha512-krg2KFIdOpLPngONDhP6ixCoWl5kbdMINP0moMSJFVX7wX1Clm2M9hlNKXS8vBGlVWwR5R3ZfI6IPrYz7c+aCQ==",
+      "dependencies": [
+        "@mapbox/geojson-rewind",
+        "@mapbox/jsonlint-lines-primitives",
+        "@mapbox/point-geometry",
+        "@mapbox/tiny-sdf",
+        "@mapbox/unitbezier",
+        "@mapbox/vector-tile",
+        "@mapbox/whoots-js",
+        "@maplibre/maplibre-gl-style-spec",
+        "@types/geojson",
+        "@types/mapbox__point-geometry",
+        "@types/mapbox__vector-tile",
+        "@types/pbf",
+        "@types/supercluster",
+        "earcut",
+        "geojson-vt",
+        "gl-matrix",
+        "global-prefix",
+        "kdbush",
+        "murmurhash-js",
+        "pbf",
+        "potpack",
+        "quickselect",
+        "supercluster",
+        "tinyqueue",
+        "vt-pbf"
+      ]
+    },
     "marked@14.1.4": {
       "integrity": "sha512-vkVZ8ONmUdPnjCKc5uTRvmkRbx4EAi2OkTOXmfTDhZz3OFqMNBM1oTTWwTr4HY4uAEojhzPf+Fy8F1DWa3Sndg=="
     },
@@ -2940,6 +3058,9 @@
     "ms@2.1.3": {
       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
     },
+    "murmurhash-js@1.0.0": {
+      "integrity": "sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw=="
+    },
     "mz@2.7.0": {
       "integrity": "sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==",
       "dependencies": [
@@ -2971,8 +3092,8 @@
         "busboy",
         "caniuse-lite",
         "postcss@8.4.31",
-        "react",
-        "react-dom",
+        "react@19.0.0",
+        "react-dom@19.0.0_react@19.0.0",
         "sharp",
         "styled-jsx"
       ]
@@ -3182,6 +3303,9 @@
         "source-map-js"
       ]
     },
+    "potpack@2.0.0": {
+      "integrity": "sha512-Q+/tYsFU9r7xoOJ+y/ZTtdVQwTWfzjbiXBDMM/JKUux3+QPP02iUuIoeBQ+Ot6oEDlC+/PGjB/5A3K7KKb7hcw=="
+    },
     "preact@10.25.4": {
       "integrity": "sha512-jLdZDb+Q+odkHJ+MpW/9U5cODzqnB+fy2EiHSZES7ldV5LK7yjlVzTp7R8Xy6W6y75kfK8iWYtFVH7lvjwrCMA=="
     },
@@ -3214,23 +3338,41 @@
     "queue-microtask@1.2.3": {
       "integrity": "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A=="
     },
+    "quickselect@2.0.0": {
+      "integrity": "sha512-RKJ22hX8mHe3Y6wH/N3wCM6BWtjaxIyyUIkpHOvfFnxdI4yD4tBXEBKSbriGujF6jnSVkJrffuo6vxACiSSxIw=="
+    },
+    "react-dom@18.3.1_react@18.3.1": {
+      "integrity": "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==",
+      "dependencies": [
+        "loose-envify",
+        "react@18.3.1",
+        "scheduler@0.23.2"
+      ]
+    },
     "react-dom@19.0.0_react@19.0.0": {
       "integrity": "sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==",
       "dependencies": [
-        "react",
-        "scheduler"
+        "react@19.0.0",
+        "scheduler@0.25.0"
       ]
     },
     "react-is@16.13.1": {
       "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
     },
-    "react-map-gl@7.1.9_react@19.0.0_react-dom@19.0.0__react@19.0.0": {
+    "react-map-gl@7.1.9_maplibre-gl@3.6.2_react@19.0.0_react-dom@18.3.1__react@18.3.1": {
       "integrity": "sha512-KsCc8Gyn05wVGlHZoopaiiCr0RCAQ6LDISo5sEy1/pV/d7RlozkF946tiX7IgyijJQMRujHol5QdwUPESjh73w==",
       "dependencies": [
         "@maplibre/maplibre-gl-style-spec",
         "@types/mapbox-gl",
-        "react",
-        "react-dom"
+        "maplibre-gl",
+        "react@19.0.0",
+        "react-dom@18.3.1_react@18.3.1"
+      ]
+    },
+    "react@18.3.1": {
+      "integrity": "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==",
+      "dependencies": [
+        "loose-envify"
       ]
     },
     "react@19.0.0": {
@@ -3350,6 +3492,15 @@
         "call-bound",
         "es-errors",
         "is-regex"
+      ]
+    },
+    "safer-buffer@2.1.2": {
+      "integrity": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
+    },
+    "scheduler@0.23.2": {
+      "integrity": "sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==",
+      "dependencies": [
+        "loose-envify"
       ]
     },
     "scheduler@0.25.0": {
@@ -3638,7 +3789,7 @@
       "integrity": "sha512-qSVyDTeMotdvQYoHWLNGwRFJHC+i+ZvdBRYosOFgC+Wg1vx4frN2/RG/NA7SYqqvKNLf39P2LSRA2pu6n0XYZA==",
       "dependencies": [
         "client-only",
-        "react"
+        "react@19.0.0"
       ]
     },
     "sucrase@3.35.0": {
@@ -3651,6 +3802,12 @@
         "mz",
         "pirates",
         "ts-interface-checker"
+      ]
+    },
+    "supercluster@8.0.1": {
+      "integrity": "sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==",
+      "dependencies": [
+        "kdbush"
       ]
     },
     "supports-color@7.2.0": {
@@ -3719,6 +3876,9 @@
     },
     "timezone-groups@0.10.2": {
       "integrity": "sha512-01G9JdlIybA9Njp0wJcGenXKWAw+woWbv6W/oMexWyPs7Nr/S2p2n1NRrMHbHaFzdf+PNNStQp1WILdnAGjYXQ=="
+    },
+    "tinyqueue@2.0.3": {
+      "integrity": "sha512-ppJZNDuKGgxzkHihX8v9v9G5f+18gzaTfrukGrq6ueg0lmH4nqVnA2IPG0AEH3jKEk2GRJCUhDoqpoiw3PHLBA=="
     },
     "to-regex-range@5.0.1": {
       "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
@@ -3839,6 +3999,14 @@
     "util-deprecate@1.0.2": {
       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
     },
+    "vt-pbf@3.1.3": {
+      "integrity": "sha512-2LzDFzt0mZKZ9IpVF2r69G9bXaP2Q2sArJCmcCgvfTdCCZzSyz4aCLoQyUilu37Ll56tCblIZrXFIjNUpGIlmA==",
+      "dependencies": [
+        "@mapbox/point-geometry",
+        "@mapbox/vector-tile",
+        "pbf"
+      ]
+    },
     "wgsl_reflect@1.0.16": {
       "integrity": "sha512-OE3urfXXbHMD5lhKZwxOxC9SFYynEGEkWXQmvi7B1gzzr5jb9+drh9A8MeBvVqKqznCoBuh8WOzVuSGSZs4CkQ=="
     },
@@ -3890,6 +4058,12 @@
         "has-tostringtag"
       ]
     },
+    "which@1.3.1": {
+      "integrity": "sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==",
+      "dependencies": [
+        "isexe"
+      ]
+    },
     "which@2.0.2": {
       "integrity": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
       "dependencies": [
@@ -3936,16 +4110,19 @@
     "packageJson": {
       "dependencies": [
         "npm:@eslint/eslintrc@3",
+        "npm:@loaders.gl/csv@^4.2.0",
         "npm:@types/node@20",
-        "npm:@types/react-dom@19",
+        "npm:@types/react-dom@18",
+        "npm:@types/react@18",
         "npm:@types/react@19",
         "npm:deck.gl@^9.1.0",
         "npm:eslint-config-next@15.1.6",
         "npm:eslint@9",
+        "npm:maplibre-gl@3",
         "npm:next@15.1.6",
         "npm:postcss@8",
-        "npm:react-dom@19",
-        "npm:react-map-gl@^7.1.9",
+        "npm:react-dom@18",
+        "npm:react-map-gl@^7.1.0",
         "npm:react@19",
         "npm:tailwindcss@^3.4.1",
         "npm:typescript@5"
