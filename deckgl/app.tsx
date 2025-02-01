@@ -336,12 +336,54 @@ export default function App({
     },
   };
 
-  const handleMapClick = (info: PickingInfo) => {
-    if (info.coordinate) {
-      setClickedLocation({ lat: info.coordinate[1], lng: info.coordinate[0] });
+  const [roadsGeoJSON, setRoadsGeoJSON] = useState(null);
+
+
+  const handleMapClick = async (info: PickingInfo) => {
+    if (!info.coordinate) return;
+  
+    const [lng, lat] = info.coordinate;
+    setClickedLocation({ lat, lng });
+  
+    // Query Overpass API for roads within 1km
+    const query = `
+      [out:json];
+      way(around:1000, ${lat}, ${lng})["highway"];
+      (._;>;);
+      out body;
+    `;
+    const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(query)}`;
+  
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+  
+      if (data.elements) {
+        const roadFeatures = data.elements
+          .filter((el) => el.type === "way" && el.nodes)
+          .map((way) => ({
+            type: "Feature",
+            properties: { id: way.id },
+            geometry: {
+              type: "LineString",
+              coordinates: way.nodes.map((nodeId) => {
+                const node = data.elements.find((el) => el.id === nodeId);
+                return node ? [node.lon, node.lat] : null;
+              }).filter(Boolean),
+            },
+          }));
+  
+        setRoadsGeoJSON({
+          type: "FeatureCollection",
+          features: roadFeatures,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching roads:", error);
     }
   };
-
+  
+  
   const closeModal = () => {
     setClickedLocation(null);
   };
@@ -546,77 +588,77 @@ export default function App({
         </button>
       </div>
       {clickedLocation && (
-        <div
-          style={{
-            position: "absolute",
-            top: 50,
-            right: 20,
-            background: "rgba(30, 30, 30, 0.9)",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
-            zIndex: 1,
-            color: "#fff",
-            fontSize: "16px",
-            maxWidth: "600px",
-          }}
-        >
-          <h4>Clicked Location</h4>
-          <p>Latitude: {clickedLocation.lat}</p>
-          <p>Longitude: {clickedLocation.lng}</p>
-          <button
-            onClick={closeModal}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              borderRadius: "4px",
-              border: "none",
-              background: "#007bff",
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            Close
-          </button>
-          <div style={{ height: "400px", width: "400px", borderRadius: "12px" }}>
-            <DeckGL
-              initialViewState={{
-                longitude: clickedLocation.lng,
-                latitude: clickedLocation.lat,
-                zoom: 14,
-                pitch: 0,
-                bearing: 0,
-              }}
-              controller={true}
-              style={{
-                width: "90%",
-                height: "60%",
-                position: "absolute",
-                left: "5%",
-                top: "65%",
-                transform: "translateY(-50%)",
-                borderRadius: "12px",
-              }}
-              layers={[
-                new ColumnLayer({
-                  id: "modal-ping-layer",
-                  data: pings,
-                  diskResolution: 12,
-                  radius: 100,
-                  extruded: true,
-                  pickable: true,
-                  elevationScale: 500,
-                  getPosition: (d) => [d.lng, d.lat],
-                  getFillColor: [255, 0, 0],
-                  getElevation: 1000,
+  <div
+    style={{
+      position: "absolute",
+      top: 50,
+      right: 20,
+      background: "rgba(30, 30, 30, 0.9)",
+      padding: "20px",
+      borderRadius: "12px",
+      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
+      zIndex: 1,
+      color: "#fff",
+      fontSize: "16px",
+      maxWidth: "600px",
+    }}
+  >
+    <h4>Clicked Location</h4>
+    <p>Latitude: {clickedLocation.lat}</p>
+    <p>Longitude: {clickedLocation.lng}</p>
+    <button
+      onClick={closeModal}
+      style={{
+        marginBottom: "10px",
+        padding: "10px",
+        borderRadius: "4px",
+        border: "none",
+        background: "#007bff",
+        color: "#fff",
+        cursor: "pointer",
+      }}
+    >
+      Close
+    </button>
+    <div style={{ height: "400px", width: "400px", borderRadius: "12px" }}>
+      <DeckGL
+        initialViewState={{
+          longitude: clickedLocation.lng,
+          latitude: clickedLocation.lat,
+          zoom: 15,
+          pitch: 0,
+          bearing: 0,
+        }}
+        controller={true}
+        style={{
+          width: "90%",
+          height: "60%",
+          position: "absolute",
+          left: "5%",
+          top: "65%",
+          transform: "translateY(-50%)",
+          borderRadius: "12px",
+        }}
+        layers={
+          roadsGeoJSON && roadsGeoJSON.features && roadsGeoJSON.features.length > 0
+            ? [
+                new ScatterplotLayer({
+                  id: "roads-layer",
+                  data: roadsGeoJSON.features,
+                  getPosition: (d) => d.geometry.coordinates,
+                  getFillColor: [255, 204, 0],
+                  getRadius: 100,
                 }),
-              ]}
-            >
-              <Map mapStyle={MAP_STYLE} />
-            </DeckGL>
-          </div>
-        </div>
-      )}
+              ]
+            : []
+        }
+      >
+        <Map mapStyle={MAP_STYLE} />
+      </DeckGL>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
