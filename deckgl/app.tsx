@@ -580,13 +580,14 @@ export default function App({
           </button>
           <div style={{ height: "400px", width: "400px", borderRadius: "12px" }}>
             <DeckGL
-              viewState={{
+              initialViewState={{
                 longitude: clickedLocation.lng,
                 latitude: clickedLocation.lat,
                 zoom: 14,
                 pitch: 0,
                 bearing: 0,
               }}
+              controller={true}
               style={{
                 width: "90%",
                 height: "60%",
@@ -610,7 +611,6 @@ export default function App({
                   getElevation: 1000,
                 }),
               ]}
-              controller={false}
             >
               <Map mapStyle={MAP_STYLE} />
             </DeckGL>
