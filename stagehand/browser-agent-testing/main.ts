@@ -56,6 +56,15 @@ export async function main({
     ].join("\n")
   );
 
+  // Basic commands
+
+  // extract - extract information from the page
+  // act - perform an action on the page
+  // goto - navigate to a URL
+
+  // try-catch for conditional flow
+
+
   //   You can use the `page` instance to write any Playwright code
   //   For more info: https://playwright.dev/docs/pom
   await page.goto("https://docs.browserbase.com/");
