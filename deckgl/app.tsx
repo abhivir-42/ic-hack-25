@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { Map, Source, Layer } from "react-map-gl/maplibre";
 import { AmbientLight, PointLight, LightingEffect } from "@deck.gl/core";
 import { HexagonLayer } from "@deck.gl/aggregation-layers";
-import { GeoJsonLayer } from "@deck.gl/layers";
+import { ColumnLayer, ScatterplotLayer } from "@deck.gl/layers";
 import DeckGL from "@deck.gl/react";
 import { CSVLoader } from "@loaders.gl/csv";
 import { load } from "@loaders.gl/core";
@@ -11,9 +11,8 @@ import { load } from "@loaders.gl/core";
 import type { Color, PickingInfo, MapViewState } from "@deck.gl/core";
 
 // Source data CSV
-const DATA_URL =
-  //   "https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/3d-heatmap/heatmap-data.csv"; // eslint-disable-line
-  "./modified_metropolitan_street.csv";
+const DATA_URL = "./modified_metropolitan_street.csv";
+
 const ambientLight = new AmbientLight({
   color: [255, 255, 255],
   intensity: 1.0,
@@ -60,22 +59,15 @@ export const colorRange: Color[] = [
 ];
 
 function getTooltip({ object }: PickingInfo) {
-  if (!object) {
-    return null;
-  }
-  const lat = object.position[1];
-  const lng = object.position[0];
-  const count = object.count;
+  if (!object) return null;
+  const { position, count } = object;
+  const [lng, lat] = position;
 
   return `
-                                Latitude: ${
-                                  Number.isFinite(lat) ? lat.toFixed(6) : ""
-                                }
-                                Longitude: ${
-                                  Number.isFinite(lng) ? lng.toFixed(6) : ""
-                                }
-                                ${count} Accidents
-                `;
+        Latitude: ${Number.isFinite(lat) ? lat.toFixed(6) : ""}
+        Longitude: ${Number.isFinite(lng) ? lng.toFixed(6) : ""}
+        ${count} Accidents
+    `;
 }
 
 type DataPoint = [longitude: number, latitude: number];
@@ -168,10 +160,9 @@ const geojson = {
   ],
 };
 
-// Approximate bounding boxes for a few London boroughs
 const boroughs = geojson.features.reduce((acc, feature) => {
   const { name } = feature.properties;
-  const coordinates = feature.geometry.coordinates[0]; // Assuming a single polygon
+  const coordinates = feature.geometry.coordinates[0];
   const lats = coordinates.map((coord) => coord[1]);
   const lngs = coordinates.map((coord) => coord[0]);
 
@@ -206,6 +197,55 @@ export default function App({
     lat: number;
     lng: number;
   } | null>(null);
+  const [geojsonData, setGeojson] = useState<any>(null);
+  const [pings, setPings] = useState<
+    { id: number; lat: number; lng: number }[]
+  >([]);
+
+  // Define London's bounds for generating random ping locations
+  const londonBounds = {
+    north: 51.686,
+    south: 51.286,
+    west: -0.51,
+    east: 0.334,
+  };
+
+  useEffect(() => {
+    fetch("./lad.json")
+      .then((response) => response.json())
+      .then((data) => {
+        const londonBoroughs = {
+          ...data,
+          features: data.features.filter((feature) =>
+            feature.properties.LAD13CD.startsWith("E09")
+          ),
+        };
+
+        const boroughNames = [
+          ...new Set(
+            londonBoroughs.features.map(
+              (feature) => feature.properties.LAD13NM
+            )
+          ),
+        ];
+
+        const boroughColorMapping: Record<string, string> = {};
+        boroughNames.forEach((name) => {
+          boroughColorMapping[name] = getRandomPastelColor();
+        });
+
+        londonBoroughs.features = londonBoroughs.features.map((feature) => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            fillColor: boroughColorMapping[feature.properties.LAD13NM],
+          },
+        }));
+
+        setGeojson(londonBoroughs);
+      })
+      .catch((error) => console.error("Error loading GeoJSON:", error));
+  }, []);
 
   const filteredData = selectedBorough
     ? data?.filter((d) => {
@@ -219,6 +259,7 @@ export default function App({
       })
     : data;
 
+  // Define the layers for the main map, including the heatmap and the ping layer.
   const layers = [
     new HexagonLayer<DataPoint>({
       id: "heatmap",
@@ -239,20 +280,22 @@ export default function App({
         shininess: 32,
         specularColor: [51, 51, 51],
       },
-
       transitions: {
         elevationScale: 3000,
       },
     }),
-    // new GeoJsonLayer({
-    //     id: 'geojson-layer',
-    //     data: geojson as GeoJSON,
-    //     getFillColor: [0, 0, 0, 0], // Transparent fill
-    //     getLineColor: (d: any) => d.properties.color,
-    //     pickable: true,
-    //     lineWidthMinPixels: 1,
-    //     getLineWidth: 2
-    // })
+    new ColumnLayer({
+      id: "ping-layer",
+      data: pings,
+      diskResolution: 12,
+      radius: 100,
+      extruded: true,
+      pickable: true,
+      elevationScale: 500,
+      getPosition: (d) => [d.lng, d.lat],
+      getFillColor: [255, 0, 0],
+      getElevation: 1000,
+    }),
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -293,47 +336,6 @@ export default function App({
     },
   };
 
-  const [geojson, setGeojson] = useState(null);
-
-  useEffect(() => {
-    fetch("./lad.json")
-      .then((response) => response.json())
-      .then((data) => {
-        // Filter only London boroughs (LAD13CD starts with 'E09')
-        const londonBoroughs = {
-          ...data,
-          features: data.features.filter((feature) =>
-            feature.properties.LAD13CD.startsWith("E09")
-          ),
-        };
-
-        // Extract a unique list of borough names (from the LAD13NM property)
-        const boroughNames = [
-          ...new Set(
-            londonBoroughs.features.map((feature) => feature.properties.LAD13NM)
-          ),
-        ];
-
-        // Create a mapping from borough name to a random pastel colour
-        const boroughColorMapping = {};
-        boroughNames.forEach((name) => {
-          boroughColorMapping[name] = getRandomPastelColor();
-        });
-
-        // Assign the fill colour to each feature's properties
-        londonBoroughs.features = londonBoroughs.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            fillColor: boroughColorMapping[feature.properties.LAD13NM],
-          },
-        }));
-
-        setGeojson(londonBoroughs);
-      })
-      .catch((error) => console.error("Error loading GeoJSON:", error));
-  }, []);
-
   const handleMapClick = (info: PickingInfo) => {
     if (info.coordinate) {
       setClickedLocation({ lat: info.coordinate[1], lng: info.coordinate[0] });
@@ -342,6 +344,25 @@ export default function App({
 
   const closeModal = () => {
     setClickedLocation(null);
+  };
+
+  // Function to generate a random ping in London
+  const handleAddPing = () => {
+    const lat =
+      Math.random() * (londonBounds.north - londonBounds.south) +
+      londonBounds.south;
+    const lng =
+      Math.random() * (londonBounds.east - londonBounds.west) +
+      londonBounds.west;
+    const newPing = { id: Date.now(), lat, lng };
+    setPings((prev) => [...prev, newPing]);
+
+    // Remove the ping after 3 seconds
+    setTimeout(() => {
+      setPings((currentPings) =>
+        currentPings.filter((p) => p.id !== newPing.id)
+      );
+    }, 3000);
   };
 
   return (
@@ -364,7 +385,11 @@ export default function App({
         onClick={handleMapClick}
       >
         <Map reuseMaps mapStyle={mapStyle}>
-          <Source id="london-boroughs" type="geojson" data={geojson}>
+          <Source
+            id="london-boroughs"
+            type="geojson"
+            data={geojsonData || geojson}
+          >
             <Layer {...layerStyle} />
           </Source>
         </Map>
@@ -503,6 +528,22 @@ export default function App({
             style={{ marginLeft: "10px", width: "100%" }}
           />
         </label>
+        <button
+          onClick={handleAddPing}
+          style={{
+            marginLeft: "10px",
+            marginTop: "10px",
+            width: "100%",
+            padding: "10px",
+            borderRadius: "4px",
+            border: "none",
+            background: "#007bff",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          Ping London
+        </button>
       </div>
       {clickedLocation && (
         <div
@@ -532,21 +573,47 @@ export default function App({
               border: "none",
               background: "#007bff",
               color: "#fff",
+              cursor: "pointer",
             }}
           >
             Close
           </button>
-          <div style={{ height: "400px", width: "400px" }}>
-            <Map
-              initialViewState={{
+          <div style={{ height: "400px", width: "400px", borderRadius: "12px" }}>
+            <DeckGL
+              viewState={{
                 longitude: clickedLocation.lng,
                 latitude: clickedLocation.lat,
                 zoom: 14,
                 pitch: 0,
                 bearing: 0,
               }}
-              mapStyle={MAP_STYLE}
-            />
+              style={{
+                width: "90%",
+                height: "60%",
+                position: "absolute",
+                left: "5%",
+                top: "65%",
+                transform: "translateY(-50%)",
+                borderRadius: "12px",
+              }}
+              layers={[
+                new ColumnLayer({
+                  id: "modal-ping-layer",
+                  data: pings,
+                  diskResolution: 12,
+                  radius: 100,
+                  extruded: true,
+                  pickable: true,
+                  elevationScale: 500,
+                  getPosition: (d) => [d.lng, d.lat],
+                  getFillColor: [255, 0, 0],
+                  getElevation: 1000,
+                }),
+              ]}
+              controller={false}
+            >
+              <Map mapStyle={MAP_STYLE} />
+            </DeckGL>
           </div>
         </div>
       )}
@@ -559,8 +626,6 @@ export async function renderToDOM(container: HTMLDivElement) {
   root.render(<App />);
 
   const data = (await load(DATA_URL, CSVLoader)).data;
-
-  console.log(data);
 
   const londonBounds = {
     north: 51.686,
