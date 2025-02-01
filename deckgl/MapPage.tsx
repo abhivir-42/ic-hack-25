@@ -176,7 +176,7 @@ const boroughs = geojson.features.reduce((acc, feature) => {
   return acc;
 }, {});
 
-export default function App({
+export default function MapPage({
   data = null,
   mapStyle = MAP_STYLE,
   radius = 100,
@@ -706,5 +706,5 @@ export async function renderToDOM(container: HTMLDivElement) {
         d[1] >= londonBounds.south &&
         d[1] <= londonBounds.north
     );
-  root.render(<App data={points} />);
+  root.render(<MapPage data={points} />);
 }
