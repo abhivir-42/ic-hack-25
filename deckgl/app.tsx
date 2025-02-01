@@ -7,8 +7,11 @@ import { ColumnLayer, LineLayer, ScatterplotLayer } from "@deck.gl/layers";
 import DeckGL from "@deck.gl/react";
 import { CSVLoader } from "@loaders.gl/csv";
 import { load } from "@loaders.gl/core";
+import ControlPanel from "./components/ControlPanel";
 
 import type { Color, PickingInfo, MapViewState } from "@deck.gl/core";
+import SideModal from "./components/SideModal";
+import { Dashboard } from "./components/Dashboard";
 
 // Source data CSV
 const DATA_URL = "./sampled_metropolitan_data.csv";
@@ -344,11 +347,11 @@ export default function App({
 
     // Query Overpass API for roads within 1km
     const query = `
-      [out:json];
-      way(around:1000, ${lat}, ${lng})["highway"];
-      (._;>;);
-      out body;
-    `;
+            [out:json];
+            way(around:1000, ${lat}, ${lng})["highway"];
+            (._;>;);
+            out body;
+        `;
     const url = `https://overpass-api.de/api/interpreter?data=${encodeURIComponent(
       query
     )}`;
@@ -417,264 +420,59 @@ export default function App({
   };
 
   return (
-    <div
-      style={{
-        position: "relative",
-        height: "100vh",
-        backgroundColor: "#1e1e1e",
-      }}
-    >
-      <DeckGL
-        layers={layers}
-        effects={[lightingEffect]}
-        viewState={viewState}
-        onViewStateChange={({ viewState }: { viewState: MapViewState }) =>
-          setViewState(viewState)
-        }
-        controller={{ dragRotate: true }}
-        getTooltip={getTooltip}
-        onClick={handleMapClick}
-      >
-        <Map reuseMaps mapStyle={mapStyle}>
-          <Source
-            id="london-boroughs"
-            type="geojson"
-            data={geojsonData || geojson}
-          >
-            <Layer {...layerStyle} />
-          </Source>
-        </Map>
-      </DeckGL>
-      <div
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          background: "rgba(30, 30, 30, 0.9)",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
-          zIndex: 1,
-          color: "#fff",
-          fontSize: "16px",
-          maxWidth: "300px",
-        }}
-      >
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Longitude:
-          <input
-            type="number"
-            name="longitude"
-            value={viewState.longitude}
-            onChange={handleChange}
-            style={{
-              marginLeft: "10px",
-              width: "100%",
-              padding: "5px",
-              borderRadius: "4px",
-              border: "none",
-            }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Latitude:
-          <input
-            type="number"
-            name="latitude"
-            value={viewState.latitude}
-            onChange={handleChange}
-            style={{
-              marginLeft: "10px",
-              width: "100%",
-              padding: "5px",
-              borderRadius: "4px",
-              border: "none",
-            }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Zoom:
-          <input
-            type="number"
-            name="zoom"
-            value={viewState.zoom}
-            onChange={handleChange}
-            style={{
-              marginLeft: "10px",
-              width: "100%",
-              padding: "5px",
-              borderRadius: "4px",
-              border: "none",
-            }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Pitch:
-          <input
-            type="number"
-            name="pitch"
-            value={viewState.pitch}
-            onChange={handleChange}
-            style={{
-              marginLeft: "10px",
-              width: "100%",
-              padding: "5px",
-              borderRadius: "4px",
-              border: "none",
-            }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Bearing:
-          <input
-            type="range"
-            name="bearing"
-            min="-180"
-            max="180"
-            value={viewState.bearing}
-            onChange={handleChange}
-            style={{ marginLeft: "10px", width: "100%" }}
-          />
-        </label>
-
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Borough:
-          <select
-            onChange={handleBoroughChange}
-            style={{
-              marginLeft: "10px",
-              width: "100%",
-              padding: "5px",
-              borderRadius: "4px",
-              border: "none",
-            }}
-          >
-            <option value="">All</option>
-            {Object.keys(boroughs).map((borough) => (
-              <option key={borough} value={borough}>
-                {borough}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Elevation Scale:
-          <input
-            type="range"
-            min="1"
-            max="100"
-            value={elevationScale}
-            onChange={handleElevationScaleChange}
-            style={{ marginLeft: "10px", width: "100%" }}
-          />
-        </label>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Radius:
-          <input
-            type="range"
-            min="100"
-            max="5000"
-            value={barRadius}
-            onChange={handleRadiusChange}
-            style={{ marginLeft: "10px", width: "100%" }}
-          />
-        </label>
-        <button
-          onClick={handleAddPing}
-          style={{
-            marginLeft: "10px",
-            marginTop: "10px",
-            width: "100%",
-            padding: "10px",
-            borderRadius: "4px",
-            border: "none",
-            background: "#007bff",
-            color: "#fff",
-            cursor: "pointer",
-          }}
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <div style={{ flex: 3, position: "relative" }}>
+        <DeckGL
+          layers={layers}
+          effects={[lightingEffect]}
+          viewState={viewState}
+          onViewStateChange={({ viewState }: { viewState: MapViewState }) =>
+            setViewState(viewState)
+          }
+          controller={{ dragRotate: true }}
+          getTooltip={getTooltip}
+          onClick={handleMapClick}
         >
-          Ping London
-        </button>
-      </div>
-      {clickedLocation && (
-        <div
-          style={{
-            position: "absolute",
-            top: 50,
-            right: 20,
-            background: "rgba(30, 30, 30, 0.9)",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.6)",
-            zIndex: 1,
-            color: "#fff",
-            fontSize: "16px",
-            maxWidth: "600px",
-          }}
-        >
-          <h4>Clicked Location</h4>
-          <p>Latitude: {clickedLocation.lat}</p>
-          <p>Longitude: {clickedLocation.lng}</p>
-          <button
-            onClick={closeModal}
-            style={{
-              marginBottom: "10px",
-              padding: "10px",
-              borderRadius: "4px",
-              border: "none",
-              background: "#007bff",
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            Close
-          </button>
-          <div
-            style={{ height: "400px", width: "400px", borderRadius: "12px" }}
-          >
-            <DeckGL
-              initialViewState={{
-                longitude: clickedLocation.lng,
-                latitude: clickedLocation.lat,
-                zoom: 15,
-                pitch: 0,
-                bearing: 0,
-              }}
-              controller={true}
-              style={{
-                width: "90%",
-                height: "60%",
-                position: "absolute",
-                left: "5%",
-                top: "65%",
-                transform: "translateY(-50%)",
-                borderRadius: "12px",
-              }}
-              layers={[
-                // Display pings on the modal map
-                new ScatterplotLayer({
-                  id: "modal-ping-layer",
-                  data: pings,
-                  getPosition: (d) => [d.lng, d.lat],
-                  getFillColor: [255, 0, 0], // Red pings
-                  getRadius: 100,
-                }),
-
-                // Show roads in the modal
-                new LineLayer({
-                  id: "roads-modal",
-                  data: roadsGeoJSON?.features || [],
-                  getSourcePosition: (d) => d.geometry.coordinates[0],
-                  getTargetPosition: (d) => d.geometry.coordinates[d.geometry.coordinates.length - 1],
-                  getColor: [128, 0, 32], // Burgundy roads
-                  getWidth: 2,
-                }),
-              ]}
+          <Map reuseMaps mapStyle={mapStyle}>
+            <Source
+              id="london-boroughs"
+              type="geojson"
+              data={geojsonData || geojson}
             >
-              <Map mapStyle={MAP_STYLE} />
-            </DeckGL>
-          </div>
-        </div>
+              <Layer {...layerStyle} />
+            </Source>
+          </Map>
+        </DeckGL>
+      </div>
+      <Dashboard
+        pings={pings}
+        elevationScale={elevationScale}
+        setElevationScale={setElevationScale}
+        barRadius={barRadius}
+        setBarRadius={setBarRadius}
+        handleAddPing={handleAddPing}
+      />
+
+      <ControlPanel
+        viewState={viewState}
+        handleChange={handleChange}
+        handleBoroughChange={handleBoroughChange}
+        handleElevationScaleChange={handleElevationScaleChange}
+        handleRadiusChange={handleRadiusChange}
+        handleAddPing={handleAddPing}
+        boroughs={boroughs}
+        selectedBorough={selectedBorough}
+        elevationScale={elevationScale}
+        barRadius={barRadius}
+      />
+      {clickedLocation && (
+        <SideModal
+          clickedLocation={clickedLocation}
+          closeModal={closeModal}
+          pings={pings}
+          roadsGeoJSON={roadsGeoJSON}
+          MAP_STYLE={MAP_STYLE}
+        />
       )}
     </div>
   );
