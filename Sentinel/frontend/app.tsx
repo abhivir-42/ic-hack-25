@@ -199,9 +199,7 @@ export default function App({
 
         const boroughNames = [
           ...new Set(
-            londonBoroughs.features.map(
-              (feature) => feature.properties.LAD13NM
-            )
+            londonBoroughs.features.map((feature) => feature.properties.LAD13NM)
           ),
         ];
 
@@ -252,14 +250,22 @@ export default function App({
     const { position, count } = object;
     const [lng, lat] = position;
 
+    console.log("object", object);
+
+    // object.forEach((d: any) => { console.log(d); });
 
     return `
       ${count} Crimes (last 6 months)
     `;
   };
 
-  // Filter the crime data based on the selected borough using the computed borough bounds.
-  const filteredData = selectedBorough
+
+  const [selectedTime, setSelectedTime] = useState(12);
+
+
+  const timeWindow = 1; // in hours
+  // First filter by borough if required
+  const filteredDataByBorough = selectedBorough
     ? data?.filter((d) => {
         const borough = boroughsMapping[selectedBorough];
         if (!borough) return false;
@@ -271,6 +277,11 @@ export default function App({
         );
       })
     : data;
+
+  // Then filter by time of day
+  const filteredData = filteredDataByBorough?.filter(
+    (d) => Math.abs(d[2] - selectedTime) <= timeWindow
+  );
 
   // Define the layers for the main map, including the heatmap and the ping layer.
   const layers = [
@@ -297,6 +308,7 @@ export default function App({
         elevationScale: 3000,
       },
     }),
+
     new ColumnLayer({
       id: "ping-layer",
       data: pings,
@@ -432,6 +444,11 @@ export default function App({
     }, 3000);
   };
 
+  const handlePredictionResponse = (response: any) => {
+    console.log("Prediction response:", response);
+
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <div style={{ flex: 3, position: "relative" }}>
@@ -457,12 +474,16 @@ export default function App({
           </Map>
         </DeckGL>
       </div>
+  
       <Dashboard
         pings={pings}
         handleAddPing={handleAddPing}
         handleBoroughChange={handleBoroughChange}
         selectedBorough={selectedBorough}
         boroughs={boroughsMapping}
+        selectedTime={selectedTime}
+        setSelectedTime={setSelectedTime}
+        handlePredictionResponse={handlePredictionResponse}
       />
 
       <ControlPanel
@@ -489,9 +510,9 @@ export default function App({
     </div>
   );
 }
-
 export async function renderToDOM(container: HTMLDivElement) {
   const root = createRoot(container);
+  // First render with no data so that the app mounts
   root.render(<App />);
 
   const data = (await load(DATA_URL, CSVLoader)).data;
@@ -502,12 +523,23 @@ export async function renderToDOM(container: HTMLDivElement) {
     west: -0.51,
     east: 0.334,
   };
+
+  // Parse each row and extract the time-of-day from the Month field.
+  // In the example, "2024-09-25-05-39" yields an hour of 5 and minute of 39.
   const points: DataPoint[] = data
-    .map((d: any) =>
-      Number.isFinite(d["Longitude"]) && Number.isFinite(d["Latitude"])
-        ? [d["Longitude"], d["Latitude"]]
-        : null
-    )
+    .map((d: any) => {
+      if (!Number.isFinite(d["Longitude"]) || !Number.isFinite(d["Latitude"])) {
+        return null;
+      }
+      const monthStr = d["Month"]; // e.g. "2024-09-25-05-39"
+      const parts = monthStr.split("-");
+      if (parts.length < 5) return null;
+      const hour = Number(parts[3]);
+      const minute = Number(parts[4]);
+      // Express the time as a decimal (e.g. 5.65 for 5:39)
+      const time = hour + minute / 60;
+      return [d["Longitude"], d["Latitude"], time];
+    })
     .filter(
       (d: DataPoint | null): d is DataPoint =>
         d !== null &&
@@ -516,5 +548,6 @@ export async function renderToDOM(container: HTMLDivElement) {
         d[1] >= londonBounds.south &&
         d[1] <= londonBounds.north
     );
+
   root.render(<App data={points} />);
 }

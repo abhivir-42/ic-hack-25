@@ -4,7 +4,7 @@ import { ScatterplotLayer, LineLayer } from "@deck.gl/layers";
 import { Map } from "react-map-gl/maplibre";
 import axios from "axios";
 
-  const Dashboard = ({ pings, handleAddPing, handleBoroughChange, selectedBorough, boroughs
+  const Dashboard = ({ pings, handleAddPing, handleBoroughChange, selectedBorough, boroughs, selectedTime, setSelectedTime, handlePredictionResponse,
   }) => {
     const [latitude, setLatitude] = useState("");
     const [longitude, setLongitude] = useState("");
@@ -18,6 +18,7 @@ import axios from "axios";
           crimeType
         });
         console.log(response.data);
+        handlePredictionResponse(response.data);
       } catch (error) {
         console.error("Error making prediction:", error);
       }
@@ -38,6 +39,19 @@ import axios from "axios";
         }}
       >
         <h3>Dashboard</h3>
+            <label style={{ display: "block", margin: "1rem 0" }}>
+        Select Time of Day: {selectedTime}:00
+        <input
+          type="range"
+          min="0"
+          max="23"
+          step="1"
+          value={selectedTime}
+          onChange={(e) => setSelectedTime(parseInt(e.target.value, 10))}
+          style={{ width: "100%" }}
+        />
+      </label>
+
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <button
               onClick={handleAddPing}

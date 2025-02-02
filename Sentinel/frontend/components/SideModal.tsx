@@ -1,10 +1,72 @@
 import React from "react";
 import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, LineLayer } from "@deck.gl/layers";
+import { ScatterplotLayer, LineLayer, PolygonLayer } from "@deck.gl/layers";
 import { Map } from "react-map-gl/maplibre";
+// Helper function to calculate a destination point given a start point, distance and bearing.
+function computeDestinationPoint(lon, lat, distance, bearing) {
+  const R = 6378137; // Earth's radius in metres
+  const brng = (bearing * Math.PI) / 180;
+  const lat1 = (lat * Math.PI) / 180;
+  const lon1 = (lon * Math.PI) / 180;
+  const lat2 = Math.asin(
+    Math.sin(lat1) * Math.cos(distance / R) +
+      Math.cos(lat1) * Math.sin(distance / R) * Math.cos(brng)
+  );
+  const lon2 =
+    lon1 +
+    Math.atan2(
+      Math.sin(brng) * Math.sin(distance / R) * Math.cos(lat1),
+      Math.cos(distance / R) - Math.sin(lat1) * Math.sin(lat2)
+    );
+  return [lon2 * (180 / Math.PI), lat2 * (180 / Math.PI)];
+}
 
+// Function to generate an array of sector polygons for a circle
+function generateSectors(center, radius, sectors, pointsPerSector = 10) {
+  const lon = center.lng;
+  const lat = center.lat;
+  const sectorPolygons = [];
+  const sectorAngle = 360 / sectors;
+
+  for (let i = 0; i < sectors; i++) {
+    const startAngle = i * sectorAngle;
+    const endAngle = (i + 1) * sectorAngle;
+    const arcPoints = [];
+
+    // Generate points along the arc of the sector.
+    for (let j = 0; j <= pointsPerSector; j++) {
+      const angle =
+        startAngle + (j / pointsPerSector) * (endAngle - startAngle);
+      const point = computeDestinationPoint(lon, lat, radius, angle);
+      arcPoints.push(point);
+    }
+
+    // Create a closed polygon: centre -> arc points -> centre.
+    const polygon = [[lon, lat], ...arcPoints, [lon, lat]];
+
+    // You can calculate or retrieve the probability for this sector here.
+    // For demonstration, we use a dummy random value.
+    sectorPolygons.push({
+      polygon,
+      sectorIndex: i,
+      probability: Math.floor(Math.random() * 100), // percentage probability
+    });
+  }
+  return sectorPolygons;
+}
 const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE }) => {
   if (!clickedLocation) return null;
+
+  const sectorsData = generateSectors(clickedLocation, 1000, 8); // 8 sectors of 45° each
+
+  // Assign a probability to each road
+  const roadsWithProbability = roadsGeoJSON?.features.map((road) => ({
+    ...road,
+    properties: {
+      ...road.properties,
+      probability: Math.floor(Math.random() * 100), // Random probability (0-100)
+    },
+  }));
 
   return (
     <div
@@ -68,12 +130,37 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
             }),
             new LineLayer({
               id: "roads-modal",
-              data: roadsGeoJSON?.features || [],
+              data: roadsWithProbability || [],
               getSourcePosition: (d) => d.geometry.coordinates[0],
-              getTargetPosition: (d) =>
-                d.geometry.coordinates[d.geometry.coordinates.length - 1],
-              getColor: [128, 0, 32],
+              getTargetPosition: (d) => d.geometry.coordinates[d.geometry.coordinates.length - 1],
               getWidth: 2,
+              getColor: (d) => {
+                const probability = d.properties.probability || 0; // Default to 0 if undefined
+                const opacity = Math.round((probability / 100) * 255); // Scale to 0-255
+                return [255, 255, 255, opacity]; // White roads with dynamic opacity
+              },
+            }),
+            new PolygonLayer({
+              id: "circle-sector-layer",
+              data: sectorsData,
+              pickable: true,
+              stroked: true,
+              filled: true,
+              lineWidthMinPixels: 2,
+              getPolygon: (d) => d.polygon,
+              getFillColor: (d) => {
+                const probability = d.probability; // 0 to 100
+                const opacity = Math.round((probability / 100) * 255); // Scale to 0-255 range
+                return [128, 0, 32, opacity]; // Keep it the same, adjust only opacity
+              },
+              getLineColor: [255, 255, 255, 0],
+              onHover: ({ object }) => {
+                if (object) {
+                  console.log(
+                    `Sector ${object.sectorIndex}: ${object.probability}% chance`
+                  );
+                }
+              },
             }),
           ]}
         >
@@ -83,5 +170,6 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
     </div>
   );
 };
+
 
 export default SideModal;
