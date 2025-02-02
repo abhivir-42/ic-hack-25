@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import DeckGL from "@deck.gl/react";
-import { ScatterplotLayer, LineLayer, PolygonLayer } from "@deck.gl/layers";
+import { ScatterplotLayer, PolygonLayer } from "@deck.gl/layers";
 import { Map } from "react-map-gl/maplibre";
-// Helper function to calculate a destination point given a start point, distance and bearing.
+
+// Helper function to compute destination points
 function computeDestinationPoint(lon, lat, distance, bearing) {
-  const R = 6378137; // Earth's radius in metres
+  const R = 6378137;
   const brng = (bearing * Math.PI) / 180;
   const lat1 = (lat * Math.PI) / 180;
   const lon1 = (lon * Math.PI) / 180;
@@ -21,8 +22,8 @@ function computeDestinationPoint(lon, lat, distance, bearing) {
   return [lon2 * (180 / Math.PI), lat2 * (180 / Math.PI)];
 }
 
-// Function to generate an array of sector polygons for a circle
-function generateSectors(center, radius, sectors, pointsPerSector = 10) {
+// Function to generate sectors with probabilities from predictions
+function generateSectors(center, radius, sectors, prediction) {
   const lon = center.lng;
   const lat = center.lat;
   const sectorPolygons = [];
@@ -33,40 +34,68 @@ function generateSectors(center, radius, sectors, pointsPerSector = 10) {
     const endAngle = (i + 1) * sectorAngle;
     const arcPoints = [];
 
-    // Generate points along the arc of the sector.
-    for (let j = 0; j <= pointsPerSector; j++) {
-      const angle =
-        startAngle + (j / pointsPerSector) * (endAngle - startAngle);
+    for (let j = 0; j <= 10; j++) {
+      const angle = startAngle + (j / 10) * (endAngle - startAngle);
       const point = computeDestinationPoint(lon, lat, radius, angle);
       arcPoints.push(point);
     }
 
-    // Create a closed polygon: centre -> arc points -> centre.
     const polygon = [[lon, lat], ...arcPoints, [lon, lat]];
-
-    // You can calculate or retrieve the probability for this sector here.
-    // For demonstration, we use a dummy random value.
+    const probability = prediction?.predicted_sectors?.[i]?.probability ?? Math.random();
     sectorPolygons.push({
       polygon,
       sectorIndex: i,
-      probability: Math.floor(Math.random() * 100), // percentage probability
+      probability,
     });
   }
+
+  // Normalize probabilities to sum up to 100
+  const totalProbability = sectorPolygons.reduce((sum, sector) => sum + sector.probability, 0);
+  sectorPolygons.forEach(sector => {
+    sector.probability = (sector.probability / totalProbability) * 100;
+  });
+
   return sectorPolygons;
 }
-const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE }) => {
-  if (!clickedLocation) return null;
 
-  const sectorsData = generateSectors(clickedLocation, 1000, 8); // 8 sectors of 45° each
+const SideModal = ({ closeModal, pings, MAP_STYLE, prediction}) => {
+  const [hoveredProbability, setHoveredProbability] = useState<number | null>(null);
+  const [countdowns, setCountdowns] = useState<Record<number, number>>({});
 
-  // Assign a probability to each road
-  const roadsWithProbability = roadsGeoJSON?.features.map((road) => ({
-    ...road,
-    properties: {
-      ...road.properties,
-      probability: Math.floor(Math.random() * 100), // Random probability (0-100)
-    },
-  }));
+  useEffect(() => {
+    // Initialize countdowns for new pings
+    const newCountdowns = pings.reduce((acc, ping) => {
+      if (!(ping.id in countdowns)) acc[ping.id] = 20; // Start at 20 seconds if not already tracked
+      return acc;
+    }, {} as Record<number, number>);
+
+    setCountdowns((prev) => ({ ...prev, ...newCountdowns }));
+
+    // Start countdown timer
+    const interval = setInterval(() => {
+      setCountdowns((prev) => {
+        const updated = { ...prev };
+        Object.keys(updated).forEach((id) => {
+          updated[id] = Math.max(updated[id] - 1, 0);
+        });
+        return updated;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [pings]);
+
+  if (!pings || pings.length === 0) return null;
+
+  // Compute average center of pings
+  const avgLat = pings.reduce((sum, p) => sum + p.lat, 0) / pings.length;
+  const avgLng = pings.reduce((sum, p) => sum + p.lng, 0) / pings.length;
+  const mapCenter = { lat: avgLat, lng: avgLng };
+
+  // Use memoization to avoid regenerating sectors unless pings or predictions change
+  const sectorsData = useMemo(() => {
+    return pings.flatMap((ping) => generateSectors(ping, 1000, 8, prediction?.[ping.id]));
+  }, [pings, prediction]);
 
   return (
     <div
@@ -84,13 +113,43 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
         maxWidth: "600px",
       }}
     >
-      <h4>Clicked Location</h4>
-      <p>Latitude: {clickedLocation.lat}</p>
-      <p>Longitude: {clickedLocation.lng}</p>
+      <h4 style={{ color: "#fff", marginBottom: "10px" }}>Active Pings</h4>
+      <div style={{ maxHeight: "200px", overflowY: "auto", scrollbarWidth: "none", msOverflowStyle: "none" }}>
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {pings.map((ping) => (
+        <li
+          key={ping.id}
+          style={{
+        background: "rgba(255, 255, 255, 0.1)",
+        marginBottom: "8px",
+        padding: "10px",
+        borderRadius: "8px",
+        color: "#fff",
+          }}
+        >
+          <strong>Crime: </strong>{ping.crime}, <strong>Severity: </strong>{ping.severity}
+
+          <div>
+        <strong>Countdown:</strong> {countdowns[ping.id]} seconds
+          </div>
+        </li>
+          ))}
+        </ul>
+      </div>
+      <style jsx>{`
+        div::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
+      <h4 style={{ color: "#fff", marginBottom: "10px" }}>
+        {hoveredProbability !== null ? `Probability: ${hoveredProbability}%` : ""}
+      </h4>
       <button
         onClick={closeModal}
         style={{
-          marginBottom: "10px",
+          position: "absolute",
+          top: "10px",
+          right: "10px",
           padding: "10px",
           borderRadius: "4px",
           border: "none",
@@ -104,9 +163,9 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
       <div style={{ height: "400px", width: "400px", borderRadius: "12px" }}>
         <DeckGL
           initialViewState={{
-            longitude: clickedLocation.lng,
-            latitude: clickedLocation.lat,
-            zoom: 15,
+            longitude: mapCenter.lng,
+            latitude: mapCenter.lat,
+            zoom: 10,
             pitch: 0,
             bearing: 0,
           }}
@@ -128,18 +187,6 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
               getFillColor: [255, 0, 0],
               getRadius: 100,
             }),
-            new LineLayer({
-              id: "roads-modal",
-              data: roadsWithProbability || [],
-              getSourcePosition: (d) => d.geometry.coordinates[0],
-              getTargetPosition: (d) => d.geometry.coordinates[d.geometry.coordinates.length - 1],
-              getWidth: 2,
-              getColor: (d) => {
-                const probability = d.properties.probability || 0; // Default to 0 if undefined
-                const opacity = Math.round((probability / 100) * 255); // Scale to 0-255
-                return [255, 255, 255, opacity]; // White roads with dynamic opacity
-              },
-            }),
             new PolygonLayer({
               id: "circle-sector-layer",
               data: sectorsData,
@@ -149,17 +196,12 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
               lineWidthMinPixels: 2,
               getPolygon: (d) => d.polygon,
               getFillColor: (d) => {
-                const probability = d.probability; // 0 to 100
-                const opacity = Math.round((probability / 100) * 255); // Scale to 0-255 range
-                return [128, 0, 32, opacity]; // Keep it the same, adjust only opacity
+                const opacity = Math.round((d.probability / 100) * 255);
+                return [128, 0, 32, opacity];
               },
               getLineColor: [255, 255, 255, 0],
               onHover: ({ object }) => {
-                if (object) {
-                  console.log(
-                    `Sector ${object.sectorIndex}: ${object.probability}% chance`
-                  );
-                }
+                setHoveredProbability(object ? object.probability : null);
               },
             }),
           ]}
@@ -170,6 +212,5 @@ const SideModal = ({ clickedLocation, closeModal, pings, roadsGeoJSON, MAP_STYLE
     </div>
   );
 };
-
 
 export default SideModal;

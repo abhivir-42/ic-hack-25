@@ -47,7 +47,7 @@ const ControlPanel: React.FC<{
                 onChange={handleChange}
                 style={{
                     marginLeft: "10px",
-                    width: "100%",
+                    width: "80%",
                     padding: "5px",
                     borderRadius: "4px",
                     border: "none",
@@ -63,7 +63,7 @@ const ControlPanel: React.FC<{
                 onChange={handleChange}
                 style={{
                     marginLeft: "10px",
-                    width: "100%",
+                    width: "80%",
                     padding: "5px",
                     borderRadius: "4px",
                     border: "none",
@@ -79,7 +79,7 @@ const ControlPanel: React.FC<{
                 onChange={handleChange}
                 style={{
                     marginLeft: "10px",
-                    width: "100%",
+                    width: "80%",
                     padding: "5px",
                     borderRadius: "4px",
                     border: "none",
@@ -95,7 +95,7 @@ const ControlPanel: React.FC<{
                 onChange={handleChange}
                 style={{
                     marginLeft: "10px",
-                    width: "100%",
+                    width: "80%",
                     padding: "5px",
                     borderRadius: "4px",
                     border: "none",

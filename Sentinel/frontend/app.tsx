@@ -9,9 +9,10 @@ import { CSVLoader } from "@loaders.gl/csv";
 import { load } from "@loaders.gl/core";
 import ControlPanel from "./components/ControlPanel";
 
-import type { Color, PickingInfo, MapViewState } from "@deck.gl/core";
+import type { Color, PickingInfo, MapViewState, ViewStateChangeParameters } from "@deck.gl/core";
 import SideModal from "./components/SideModal";
 import { Dashboard } from "./components/Dashboard";
+import axios from "axios";
 
 // Source data CSV
 const DATA_URL = "./sampled_metropolitan_data.csv";
@@ -166,15 +167,16 @@ export default function App({
 }) {
   const [viewState, setViewState] = useState(INITIAL_VIEW_STATE);
   const [selectedBorough, setSelectedBorough] = useState<string | null>(null);
-  const [elevationScale, setElevationScale] = useState(1);
+  const [elevationScale, setElevationScale] = useState(5);
   const [barRadius, setBarRadius] = useState(radius);
+  // We no longer use clickedLocation for the modal
   const [clickedLocation, setClickedLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
   const [geojsonData, setGeojson] = useState<any>(null);
   const [pings, setPings] = useState<
-    { id: number; lat: number; lng: number }[]
+    { id: number; lat: number; lng: number, crime: any, severity: any}[]
   >([]);
 
   // Define London's bounds for generating random ping locations
@@ -252,16 +254,12 @@ export default function App({
 
     console.log("object", object);
 
-    // object.forEach((d: any) => { console.log(d); });
-
     return `
       ${count} Crimes (last 6 months)
     `;
   };
 
-
   const [selectedTime, setSelectedTime] = useState(12);
-
 
   const timeWindow = 1; // in hours
   // First filter by borough if required
@@ -421,33 +419,104 @@ export default function App({
     }
   };
 
-  const closeModal = () => {
-    setClickedLocation(null);
+  const crimeSeverityMapping = {
+    "anti-social behaviour": "Low",
+    "bicycle theft": "Low",
+    "criminal damage and arson": "Medium",
+    "drugs": "Medium",
+    "public order": "Medium",
+    "shoplifting": "Low",
+    "theft from the person": "Medium",
+    "vehicle crime": "Medium",
+    "burglary": "High",
+    "robbery": "High",
+    "violence and sexual offences": "High",
+    "possession of weapons": "High",
+    "other theft": "Medium",
+    "other crime": "Medium",
+    "homicide": "Critical",
+    "kidnapping": "Critical",
+    "terrorism": "Critical"
   };
 
-  // Function to generate a random ping in London
+  const [crime, setCrime] = useState<{ type: string; severity: string } | null>(null);
+  
+  
+
+  // Modified ping handler: adds a ping, calls the predict API, then removes the ping after n seconds.
   const handleAddPing = () => {
+    let selectedBounds: { north: number; south: number; west: number; east: number } | null = null;
+  
+    if (selectedBorough && boroughsMapping[selectedBorough]) {
+      selectedBounds = boroughsMapping[selectedBorough];
+    } else if (!selectedBorough && Object.keys(boroughsMapping).length > 0) {
+      // If no borough is selected, fall back to the entire London bounding box
+      selectedBounds = londonBounds;
+    }
+  
+    if (!selectedBounds) {
+      console.warn("No valid bounding box found for selected borough.");
+      return;
+    }
+  
+    // Generate a random location within the selected borough’s bounds
     const lat =
-      Math.random() * (londonBounds.north - londonBounds.south) +
-      londonBounds.south;
+      Math.random() * (selectedBounds.north - selectedBounds.south) +
+      selectedBounds.south;
     const lng =
-      Math.random() * (londonBounds.east - londonBounds.west) +
-      londonBounds.west;
-    const newPing = { id: Date.now(), lat, lng };
+      Math.random() * (selectedBounds.east - selectedBounds.west) +
+      selectedBounds.west;
+    
+    // Choose a random crime type from the dictionary
+    const crimeTypes = Object.keys(crimeSeverityMapping);
+    const randomCrimeType = crimeTypes[Math.floor(Math.random() * crimeTypes.length)];
+    const newPing = { id: Date.now(), lat, lng, crime: randomCrimeType, severity: crimeSeverityMapping[randomCrimeType] };
     setPings((prev) => [...prev, newPing]);
 
-    // Remove the ping after 3 seconds
+    // Call the predict API using the random crime type
+    handlePredict(newPing.lng, newPing.lat, randomCrimeType);
+  
     setTimeout(() => {
       setPings((currentPings) =>
         currentPings.filter((p) => p.id !== newPing.id)
       );
-    }, 3000);
+    }, 20000);
+  };
+  
+
+  // Modified closeModal: now clears the pings (which controls the modal).
+  const closeModal = () => {
+    setPings([]);
   };
 
-  const handlePredictionResponse = (response: any) => {
-    console.log("Prediction response:", response);
+  const [predictionResponse, setPredictionResponse] = useState(null);
+  const [prediction, setPrediction] = useState(null);
 
-  }
+  const handlePredictionResponse = (data) => {
+    setPredictionResponse(data);
+  };
+
+  const handlePredict = async (
+    longitude: number,
+    latitude: number,
+    crimeType: string
+  ) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/predict",
+        { longitude, latitude, crimeType },
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log(response.data);
+      handlePredictionResponse(response.data);
+    } catch (error) {
+      console.error("Error making prediction:", error);
+    }
+  };
+
+  // Compute the last ping (if any) to use as the centre for the SideModal.
+  const lastPing =
+    pings && pings.length > 0 ? pings[pings.length - 1] : null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
@@ -456,8 +525,8 @@ export default function App({
           layers={layers}
           effects={[lightingEffect]}
           viewState={viewState}
-          onViewStateChange={({ viewState }: { viewState: MapViewState }) =>
-            setViewState(viewState)
+          onViewStateChange={(params) =>
+            setViewState(params.viewState as unknown as MapViewState)
           }
           controller={{ dragRotate: true }}
           getTooltip={getTooltip}
@@ -474,7 +543,7 @@ export default function App({
           </Map>
         </DeckGL>
       </div>
-  
+
       <Dashboard
         pings={pings}
         handleAddPing={handleAddPing}
@@ -484,6 +553,7 @@ export default function App({
         selectedTime={selectedTime}
         setSelectedTime={setSelectedTime}
         handlePredictionResponse={handlePredictionResponse}
+        handlePredict={handlePredict}
       />
 
       <ControlPanel
@@ -498,18 +568,20 @@ export default function App({
         elevationScale={elevationScale}
         barRadius={barRadius}
       />
-      {clickedLocation && (
+      {(clickedLocation || lastPing) && (
         <SideModal
-          clickedLocation={clickedLocation}
+          centerLocation={lastPing}
           closeModal={closeModal}
           pings={pings}
           roadsGeoJSON={roadsGeoJSON}
           MAP_STYLE={MAP_STYLE}
+          prediction={prediction}
         />
       )}
     </div>
   );
 }
+
 export async function renderToDOM(container: HTMLDivElement) {
   const root = createRoot(container);
   // First render with no data so that the app mounts
